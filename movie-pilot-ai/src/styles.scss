@@ -9,6 +9,8 @@ body {
   color: theme.$text;
   font-family: theme.$primary-font;
   min-height: 100vh;
+  padding: 0;
+  margin: 0;
 }
 
 * {
@@ -21,3 +23,33 @@ body {
     font-weight: 400;
     margin-top: 4px;
 }
+
+/* Custom scrollbar styling */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #{theme.$purple} #{theme.$surface};
+}
+
+/* WebKit browsers */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #{theme.$surface};
+}
+
+::-webkit-scrollbar-thumb {
+  background-image: #{theme.$grad};
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  filter: brightness(0.9);
+}
+
+/* Fallback for older browsers */
+body::-webkit-scrollbar-thumb { box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08); }

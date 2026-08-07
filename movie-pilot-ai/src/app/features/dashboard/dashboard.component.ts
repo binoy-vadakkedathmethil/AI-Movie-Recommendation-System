@@ -1,18 +1,18 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Movie, gradientAt } from 'src/app/shared/models/movie.model';
+import { Movie, gradientAt } from '../../shared/models/movie.model';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
+  styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent {
   @Input() userName = 'Binoy';
 
-  topPicks: Movie[] = [
+  topPicks: any[] = [
     { title: 'Dune: Part Two', rating: 8.5, match: 'Match', gradient: gradientAt(0) },
     { title: 'Interstellar', rating: 8.6, match: 'Match', gradient: gradientAt(1) },
     { title: 'Inception', rating: 8.8, match: 'Match', gradient: gradientAt(2) },
