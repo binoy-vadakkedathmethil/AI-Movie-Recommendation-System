@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+@use './styles/theme' as theme;
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+
+
+body {
+  background: theme.$bg;
+  color: theme.$text;
+  font-family: theme.$primary-font;
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.error{
+    color: theme.$error;
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 4px;
+}

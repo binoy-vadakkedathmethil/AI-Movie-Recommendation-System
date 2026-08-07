@@ -1,0 +1,326 @@
+@use 'styles/theme' as theme;
+
+/* ---------- shared ---------- */
+.hidden {
+  display: none !important;
+}
+
+::selection {
+  background: theme.$purple;
+  color: #fff;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a2a42;
+  border-radius: 8px;
+}
+
+/* ---------- LOGIN ---------- */
+.login-view {
+  min-height: 100vh;
+  display: flex;
+  align-items: stretch;
+
+  .login-left {
+    flex: 1.1;
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(circle at 30% 20%, rgba(124, 58, 237, 0.35), transparent 55%),
+      radial-gradient(circle at 75% 70%, rgba(79, 124, 255, 0.3), transparent 55%),
+      theme.$bg;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 64px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: radial-gradient(circle at 40% 40%, black 0%, transparent 70%);
+    }
+
+    .orb {
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      right: -60px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: 50%;
+      background: conic-gradient(from 90deg, #7c3aed, #4f7cff, #22c9a3, #7c3aed);
+      filter: blur(70px);
+      opacity: 0.35;
+    }
+
+    .brain-mark {
+      position: relative;
+      z-index: 1;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: theme.$grad;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 52px;
+      font-weight: 700;
+      margin-bottom: 36px;
+      box-shadow: 0 0 60px rgba(124, 58, 237, 0.5);
+    }
+
+    h1 {
+      position: relative;
+      z-index: 1;
+      font-size: 44px;
+      font-weight: 700;
+      line-height: 1.15;
+      max-width: 520px;
+
+      .grad-text {
+        background: theme.$grad;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+    }
+
+    p {
+      position: relative;
+      z-index: 1;
+      margin-top: 18px;
+      color: theme.$text-muted;
+      font-size: 16px;
+      max-width: 440px;
+    }
+
+    .login-stats {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 36px;
+      margin-top: 56px;
+
+      div {
+        p:first-child {
+          font-size: 26px;
+          font-weight: 700;
+        }
+
+        p:last-child {
+          font-size: 13px;
+          color: theme.$text-muted;
+          margin-top: 2px;
+        }
+      }
+    }
+  }
+
+  .login-right {
+    width: 480px;
+    flex-shrink: 0;
+    background: theme.$surface;
+    border-left: 1px solid theme.$border;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+
+    .login-card {
+      width: 100%;
+      max-width: 340px;
+
+      .logo-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 36px;
+
+        .logo-icon {
+          width: 36px;
+          height: 36px;
+          border-radius: 10px;
+          background: theme.$grad;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 18px;
+        }
+
+        span {
+          font-size: 19px;
+          font-weight: 700;
+
+          b {
+            background: theme.$grad;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+          }
+        }
+      }
+
+      h2 {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+
+      .sub {
+        color: theme.$text-muted;
+        font-size: 14px;
+        margin-bottom: 28px;
+      }
+
+      .field {
+        margin-bottom: 18px;
+
+        label {
+          display: block;
+          font-size: 13px;
+          color: theme.$text-muted;
+          margin-bottom: 7px;
+        }
+
+        input {
+          width: 100%;
+          padding: 12px 14px;
+          background: theme.$surface-2;
+          border: 1px solid theme.$border;
+          border-radius: 10px;
+          color: theme.$text;
+          font-size: 14px;
+          outline: none;
+          transition: border-color 0.15s;
+
+          
+
+          &:focus {
+            border-color: theme.$purple;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+          }
+        }
+      }
+
+      .row-between {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 2px 0 24px;
+        font-size: 13px;
+      }
+
+      .remember {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        color: theme.$text-muted;
+
+        input {
+          accent-color: theme.$purple;
+        }
+      }
+
+      .forgot {
+        color: theme.$purple;
+        font-weight: 600;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .btn-primary {
+        width: 100%;
+        padding: 13px;
+        border: none;
+        border-radius: 10px;
+        background: theme.$grad;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        letter-spacing: 0.2px;
+        box-shadow: 0 8px 24px rgba(124, 58, 237, 0.35);
+        transition: transform 0.15s, box-shadow 0.15s;
+
+        &:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 10px 28px rgba(124, 58, 237, 0.45);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+      }
+
+      .divider {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 24px 0;
+        color: theme.$text-muted;
+        font-size: 12px;
+
+        &::before,
+        &::after {
+          content: "";
+          flex: 1;
+          height: 1px;
+          background: theme.$border;
+        }
+      }
+
+      .oauth-row {
+        display: flex;
+        gap: 10px;
+
+        .oauth-btn {
+          flex: 1;
+          padding: 11px;
+          border-radius: 10px;
+          border: 1px solid theme.$border;
+          background: theme.$surface-2;
+          color: theme.$text;
+          font-size: 13px;
+          font-weight: 600;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+
+          &:hover {
+            border-color: #3a3a5a;
+          }
+        }
+      }
+
+      .signup-line {
+        text-align: center;
+        margin-top: 26px;
+        font-size: 13px;
+        color: theme.$text-muted;
+
+        a {
+          color: theme.$purple;
+          font-weight: 600;
+            cursor: pointer;
+        }
+      }
+    }
+  }
+}

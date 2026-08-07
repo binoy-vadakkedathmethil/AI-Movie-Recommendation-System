@@ -1,0 +1,31 @@
+:root{
+    --bg:#0a0a12;
+    --surface:#12121e;
+    --surface-2:#181828;
+    --border:#26263e;
+    --text:#f1f0f7;
+    --text-muted:#8f8ea3;
+    --purple:#8b5cf6;
+    --blue:#4f7cff;
+    --grad: linear-gradient(135deg,#7c3aed 0%,#4f7cff 100%);
+    --gold:#f5b942;
+    --teal:#22c9a3;
+    --pink:#e156a3;
+    --primary-font:'Lato', sans-serif;
+    --error:#f11023;
+  }
+
+$bg: var(--bg);
+$surface: var(--surface);
+$surface-2: var(--surface-2);
+$border: var(--border);
+$text: var(--text);
+$text-muted: var(--text-muted);
+$purple: var(--purple);
+$blue: var(--blue);
+$grad: var(--grad);
+$gold: var(--gold);
+$teal: var(--teal);
+$pink: var(--pink);
+$primary-font: var(--primary-font);
+$error: var(--error);

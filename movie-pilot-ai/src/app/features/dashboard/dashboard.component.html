@@ -1,0 +1,111 @@
+<div class="dash-view">
+  <aside class="sidebar">
+    <div class="brand-row">
+      <div class="logo-icon">🎬</div>
+      <div class="brand-text">Cine<b>Mind AI</b></div>
+    </div>
+    <div class="tagline">Where AI understands your taste.</div>
+
+    <nav class="nav">
+      <a href="#" class="active"><span class="ic">🏠</span>Dashboard</a>
+      <a href="#"><span class="ic">🤖</span>AI Chat</a>
+      <a href="#"><span class="ic">🧭</span>Discover</a>
+      <a href="#"><span class="ic">🔖</span>Watchlist</a>
+      <a href="#"><span class="ic">📊</span>Analytics</a>
+      <a href="#"><span class="ic">⚙️</span>Settings</a>
+    </nav>
+
+    <div class="taste-card">
+      <h4>Your AI taste profile</h4>
+      <div class="ring-wrap">
+        <div class="ring"><span>85%</span></div>
+        <div class="lbl">Profile strength<b>Strong match</b></div>
+      </div>
+      <div class="genre-pills">
+        <span class="pill" *ngFor="let g of genres" [ngClass]="g.cls">{{ g.label }}</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="search-box">🔍 Search movies, genres, actors, or ask AI...</div>
+      <div class="icon-btn">🔔<span class="dot"></span></div>
+      <div class="user-chip">
+        <div class="avatar">{{ userName.charAt(0) }}</div>
+        {{ userName }}
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow">✨ AI-Powered Recommendations</div>
+      <h1><span class="g">AI-Powered</span> movie recommendations</h1>
+      <p>Personalized for your taste, explained by AI — not just a match score.</p>
+      <div class="hero-actions">
+        <button class="btn-cta" (click)="askAi()">✨ Ask AI anything</button>
+        <div class="btn-ghost"><span class="play-dot">▶</span>Watch demo</div>
+      </div>
+    </section>
+
+    <div class="section-head">
+      <h3>✨ Top picks for you</h3>
+      <span class="view-all">View all</span>
+    </div>
+    <div class="movie-row">
+      <div class="movie-card" *ngFor="let m of topPicks">
+        <div class="poster" [style.background]="m.gradient">
+          <span class="badge">🎯 {{ m.match }}</span>{{ m.title }}
+        </div>
+        <div class="card-foot">★ {{ m.rating }}</div>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <h3>🎬 Because you like Christopher Nolan</h3>
+      <span class="view-all">View all</span>
+    </div>
+    <div class="movie-row">
+      <div class="movie-card" *ngFor="let m of nolanPicks">
+        <div class="poster" [style.background]="m.gradient">
+          <span class="badge">🎯 {{ m.match }}</span>{{ m.title }}
+        </div>
+        <div class="card-foot">★ {{ m.rating }}</div>
+      </div>
+    </div>
+  </main>
+
+  <aside class="right-col">
+    <div class="panel">
+      <div class="panel-head">🤖 AI movie assistant</div>
+      <div class="chat-bubble-user">Recommend sci-fi movies like Interstellar but shorter.</div>
+      <div class="chat-bubble-bot">
+        <div class="bot-ic">🤖</div>
+        <p>Here are some sci-fi movies you might love!</p>
+      </div>
+      <div class="mini-grid">
+        <div class="mini-card" *ngFor="let m of assistantPicks">
+          <div class="mini-poster" [style.background]="m.gradient">{{ m.title }}</div>
+          <div class="mini-rate">★ {{ m.rating }}</div>
+        </div>
+      </div>
+      <button class="btn-block" type="button">View all recommendations</button>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">🧠 AI insights</div>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="l">Accuracy</div><div class="n n-green">96%</div></div>
+        <div class="stat-box"><div class="l">Top genre</div><div class="n n-purple">Sci-Fi</div></div>
+        <div class="stat-box"><div class="l">Exploration</div><div class="n n-blue">High</div></div>
+      </div>
+    </div>
+
+    <div class="panel mood-panel">
+      <div class="panel-head">😊 Mood-based picks <span class="view-all">View all</span></div>
+      <div class="mood-line">You seem <b>curious</b> today — movies that match your mood.</div>
+      <div class="mood-grid">
+        <div class="mood-mini" *ngFor="let m of moodPicks" [style.background]="m.gradient">{{ m.title }}</div>
+      </div>
+    </div>
+  </aside>
+</div>

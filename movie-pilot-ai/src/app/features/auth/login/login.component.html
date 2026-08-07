@@ -1,0 +1,123 @@
+<div class="login-view">
+  <div class="login-left">
+    <div class="orb"></div>
+    <div class="brain-mark">AI</div>
+    <h1>Where <span class="grad-text">AI</span> understands<br />your taste.</h1>
+    <p>Sign in to get movie recommendations explained by AI, tuned to your mood and your favorite directors.</p>
+    <div class="login-stats">
+      <div><p>2.4M+</p><p>movies indexed</p></div>
+      <div><p>96%</p><p>match accuracy</p></div>
+      <div><p>850K</p><p>curious minds</p></div>
+    </div>
+  </div>
+
+  <div class="login-right">
+    <div class="login-card">
+      <div class="logo-row">
+        <div class="logo-icon">🎬</div>
+        <span>Movie <b>Pilot AI</b></span>
+      </div>
+      @if (isLogin()){
+      <h2>Welcome back</h2>
+      <p class="sub">Sign in to continue to your recommendations.</p>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="field">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            formControlName="email"
+            type="email"
+            placeholder="you@example.com"
+          />
+          @if (loginForm.controls['email'].touched && loginForm.controls['email'].invalid) {
+            <div class="error">
+              @if (loginForm.controls['email'].errors?.['required']) {
+                <small>Email is required.</small>
+              }
+              @if (loginForm.controls['email'].errors?.['email']) {
+                <small>Enter a valid email.</small>
+              }
+            </div>
+             
+          }
+        </div>
+        <div class="field">
+          <label for="pass">Password</label>
+          <input
+            id="pass"
+            formControlName="password"
+            type="password"
+            placeholder="••••••••"
+          />
+          @if (loginForm.controls['password'].touched && loginForm.controls['password'].invalid) {
+            <div class="error"><small>Password is required.</small></div>
+          }
+        </div>
+        <div class="row-between">
+          <label class="remember">
+            <input type="checkbox" formControlName="rememberMe" />
+            Remember me
+          </label>
+          <a class="forgot" href="#">Forgot password?</a>
+        </div>
+        <button class="btn-primary" type="submit">Sign in</button>
+      </form>
+      <p class="signup-line">Don't have an account? <a  (click)="isLogin.set(!isLogin())">Sign up free</a></p>
+      }@else{
+              <h2>Create your account</h2>
+        <p class="sub">Join Movie Pilot AI and get recommendations tuned to you.</p>
+        <form [formGroup]="registerForm" (ngSubmit)="onSignupSubmit()">
+          <div class="field">
+            <label for="signup-name">Full name</label>
+            <input id="signup-name" formControlName="name" type="text" placeholder="Ada Lovelace" />
+            @if (registerForm.controls['name'].touched && registerForm.controls['name'].invalid) {
+              <div class="error"><small>Name is required.</small></div>
+            }
+          </div>
+          <div class="field">
+            <label for="signup-email">Email</label>
+            <input id="signup-email" formControlName="email" type="email" placeholder="you@example.com" />
+            @if (registerForm.controls['email'].touched && registerForm.controls['email'].invalid) {
+              <div class="error">
+                @if (registerForm.controls['email'].errors?.['required']) {
+                  <small>Email is required.</small>
+                }
+                @if (registerForm.controls['email'].errors?.['email']) {
+                  <small>Enter a valid email.</small>
+                }
+              </div>
+            }
+          </div>
+          <div class="field">
+            <label for="signup-pass">Password</label>
+            <input id="signup-pass" formControlName="password" type="password" placeholder="At least 8 characters" />
+              @if (registerForm.controls['password'].touched && registerForm.controls['password'].invalid) {
+                <div class="error">
+                  @if (registerForm.controls['password'].errors?.['required']) {
+                    <small>Password is required.</small>
+                  }
+                  @if (registerForm.controls['password'].errors?.['minlength']) {
+                    <small>Minimum 8 characters.</small>
+                  }
+                </div>
+              }
+          </div>
+          <div class="field">
+            <label for="signup-confirm">Confirm password</label>
+            <input id="signup-confirm" formControlName="confirmPassword" type="password" placeholder="••••••••" />
+            @if (registerForm.touched && registerForm.errors?.['mismatch']) {
+              <div class="error"><small>Passwords do not match.</small></div>
+            }
+          </div>
+
+          <button class="btn-primary" type="submit">Create account</button>
+        </form>
+
+         <p class="signup-line">Already have an account? <a  (click)="isLogin.set(!isLogin())">Sign in</a></p>
+      }
+
+     
+    </div>
+  </div>
+</div>
