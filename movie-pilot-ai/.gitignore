@@ -30,12 +30,21 @@ yarn-error.log
 
 # Miscellaneous
 /.angular/cache
+/.angular/
 .sass-cache/
+.vite/
+.vite-ssr/
+.parcel-cache/
+.cache/
 /connect.lock
 /coverage
+/coverage-*/
 /libpeerconnection.log
 testem.log
 /typings
+/storybook-static/
+/.next/
+/.turbo/
 
 # System files
 .DS_Store

@@ -12,3 +12,4 @@ def hash_password(password: str):
 
 def verify_password(password, hashed_password):
     return pwd_context.verify(password, hashed_password)
+

@@ -1,9 +1,11 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-
-
+import { AuthService } from '../../../core/services/auth.service';
+import { confirmPasswordMatchValidator } from '../../../shared/validators/confirm-password-match.validator';
+import { passwordStrengthValidator } from '../../../shared/validators/password-strength.validator';
+import {MatSnackBar} from '@angular/material/snack-bar';
 @Component({
   selector: 'app-login',
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
@@ -11,11 +13,15 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  private _snackBar = inject(MatSnackBar);
   isLogin = signal<boolean>(true);
   loginForm: FormGroup;
   registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -24,29 +30,48 @@ export class LoginComponent {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(8), passwordStrengthValidator]],
       confirmPassword: ['', Validators.required]
-    }, { validators: this.passwordsMatch });
+    }, { validators: confirmPasswordMatchValidator });
   }
 
   onSubmit(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
+      this._snackBar.open('Please fill in all required fields correctly.', 'Close');
       return;
     }
-    console.log('Login submitted', this.loginForm.value);
+
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (response) => {
+        console.log('Login submitted', response);
+      },
+      error: (error) => {
+        console.error('Login failed', error);
+      }
+    });
   }
-  passwordsMatch(group: FormGroup) {
-    const pw = group.get('password')?.value;
-    const cpw = group.get('confirmPassword')?.value;
-    return pw === cpw ? null : { mismatch: true };
-  }
+
 
   onSignupSubmit(): void {
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
+      this._snackBar.open('Please fill in all required fields correctly.', 'Close');
       return;
     }
-    console.log('Register submitted', this.registerForm.value);
+    const payload = {
+        username: this.registerForm.get('name')?.value,
+        email: this.registerForm.get('email')?.value,
+        password: this.registerForm.get('password')?.value,
+   }
+
+    this.authService.register(payload).subscribe({
+      next: (response) => {
+        console.log('Register submitted', response);
+      },
+      error: (error) => {
+        console.error('Registration failed', error);
+      }
+    });
   }
 }

@@ -59,7 +59,7 @@
             <input type="checkbox" formControlName="rememberMe" />
             Remember me
           </label>
-          <a class="forgot" href="#">Forgot password?</a>
+          <!-- <a class="forgot" href="#">Forgot password?</a> -->
         </div>
         <button class="btn-primary" type="submit">Sign in</button>
       </form>
@@ -69,10 +69,10 @@
         <p class="sub">Join Movie Pilot AI and get recommendations tuned to you.</p>
         <form [formGroup]="registerForm" (ngSubmit)="onSignupSubmit()">
           <div class="field">
-            <label for="signup-name">Full name</label>
+            <label for="signup-name">Username</label>
             <input id="signup-name" formControlName="name" type="text" placeholder="Ada Lovelace" />
             @if (registerForm.controls['name'].touched && registerForm.controls['name'].invalid) {
-              <div class="error"><small>Name is required.</small></div>
+              <div class="error"><small>Username is required.</small></div>
             }
           </div>
           <div class="field">
