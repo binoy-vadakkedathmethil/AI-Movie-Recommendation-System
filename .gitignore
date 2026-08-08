@@ -1,0 +1,43 @@
+# Python bytecode and cache files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# Database files
+*.sqlite3
+*.db
+movie.db
+
+# Coverage and test artifacts
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# IDE/editor folders
+.vscode/
+.DS_Store
+
+# Build and packaging artifacts
+build/
+dist/
+*.egg-info/
+
+# Log files
+*.log
+
+# Local dependency snapshots are allowed to be committed if intentionally generated
+# requirements.txt is intentionally tracked by project codebase
