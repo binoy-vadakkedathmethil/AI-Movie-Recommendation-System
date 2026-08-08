@@ -2,7 +2,12 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
-from app.schemas.auth import LoginRequest, RegisterRequest, TokenResponse, UserResponse
+from app.schemas.auth import (
+    LoginRequest,
+    RegisterRequest,
+    RegisterResponse,
+    TokenResponse,
+)
 from app.services.auth_service import authenticate_user, register_user
 from app.utils.jwt_handler import create_access_token
 
@@ -11,7 +16,9 @@ router = APIRouter()
 
 
 @router.post(
-    "/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED
+    "/register",
+    response_model=RegisterResponse,
+    status_code=status.HTTP_201_CREATED
 )
 def register(request: RegisterRequest, db: Session = Depends(get_db)):
 
@@ -22,7 +29,11 @@ def register(request: RegisterRequest, db: Session = Depends(get_db)):
             status_code=status.HTTP_409_CONFLICT, detail="Email already registered"
         )
 
-    return user
+    return {
+        "success": True,
+        "message": "User registered successfully",
+        "user": user,
+    }
 
 
 @router.post("/login", response_model=TokenResponse)

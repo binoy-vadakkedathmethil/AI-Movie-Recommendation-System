@@ -40,6 +40,13 @@ class UserResponse(BaseModel):
     )
 
 
+class RegisterResponse(BaseModel):
+
+    success: bool
+    message: str
+    user: UserResponse | None = None
+
+
 class TokenResponse(BaseModel):
 
     access_token: str

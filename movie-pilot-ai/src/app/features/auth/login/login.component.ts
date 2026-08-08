@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { confirmPasswordMatchValidator } from '../../../shared/validators/confirm-password-match.validator';
 import { passwordStrengthValidator } from '../../../shared/validators/password-strength.validator';
@@ -14,6 +14,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class LoginComponent {
   private _snackBar = inject(MatSnackBar);
+  private readonly router = inject(Router);
   isLogin = signal<boolean>(true);
   loginForm: FormGroup;
   registerForm: FormGroup;
@@ -45,6 +46,7 @@ export class LoginComponent {
     this.authService.login(this.loginForm.value).subscribe({
       next: (response) => {
         console.log('Login submitted', response);
+        this.router.navigate(['/dashboard']);
       },
       error: (error) => {
         console.error('Login failed', error);
@@ -67,7 +69,10 @@ export class LoginComponent {
 
     this.authService.register(payload).subscribe({
       next: (response) => {
-        console.log('Register submitted', response);
+        if(response?.success){
+            this._snackBar.open('Registration successful! Please log in.', 'Close');
+            this.isLogin.set(true);
+        }
       },
       error: (error) => {
         console.error('Registration failed', error);
