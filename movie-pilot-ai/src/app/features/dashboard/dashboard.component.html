@@ -31,7 +31,13 @@
 
   <main class="main">
     <div class="topbar">
-      <div class="search-box">🔍 Search movies, genres, actors, or ask AI...</div>
+     <div class="movie-search">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            placeholder="Search movies, genres, actors, or ask AI..."
+          />
+        </div>
       <div class="icon-btn">🔔<span class="dot"></span></div>
       <div class="user-chip">
         <div class="avatar">{{ userName.charAt(0) }}</div>
@@ -43,10 +49,10 @@
       <div class="eyebrow">✨ AI-Powered Recommendations</div>
       <h1><span class="g">AI-Powered</span> movie recommendations</h1>
       <p>Personalized for your taste, explained by AI — not just a match score.</p>
-      <div class="hero-actions">
+      <!-- <div class="hero-actions">
         <button class="btn-cta" (click)="askAi()">✨ Ask AI anything</button>
         <div class="btn-ghost"><span class="play-dot">▶</span>Watch demo</div>
-      </div>
+      </div> -->
     </section>
 
     <div class="section-head">
