@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes import auth
 from app.core.database import Base, engine
-
+from app.api.routes import recommendations
 # Import models so SQLAlchemy knows about them
 from app.models import User
 
@@ -31,7 +31,9 @@ app.include_router(
     prefix="/api/auth",
     tags=["Authentication"]
 )
-
+app.include_router(
+    recommendations.router
+)
 
 @app.get("/")
 def root():
