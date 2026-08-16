@@ -27,7 +27,6 @@ export class AuthService {
     return this.apiService.post<any>('/auth/login', payload).pipe(
       map((response) => {
         const token = response?.token ?? response?.accessToken ?? response?.data?.token;
-
         if (token) {
           this.tokenService.setToken(token);
         }
@@ -41,7 +40,5 @@ export class AuthService {
     return this.apiService.post('/auth/register', payload);
   }
 
-  logout(): void {
-    this.tokenService.clearToken();
-  }
+
 }

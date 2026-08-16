@@ -1,23 +1,40 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Movie, gradientAt } from '../../shared/models/movie.model';
-
+import {MatMenuModule} from '@angular/material/menu';
+import { TokenService } from '../../core/services/token.service';
+import { Router } from '@angular/router';
+import { RecommendationsService } from '../../shared/services/recommendations-service';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,MatMenuModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent {
-  @Input() userName = 'Binoy';
+ readonly popularMovies = signal<Movie[]>([]);
+  readonly isLoading = signal(false);
+  readonly errorMessage = signal('');
 
+
+constructor(
+    private readonly tokenService: TokenService,
+     private readonly router: Router,
+     private readonly recommendationsService: RecommendationsService
+  ) {}
+  ngOnInit(): void {
+    this.getPopularRecommendations();
+  }
+  gotoDshboard(): void {
+     this.router.navigate(['/dashboard']);
+  }
   topPicks: any[] = [
-    { title: 'Dune: Part Two', rating: 8.5, match: 'Match', gradient: gradientAt(0) },
-    { title: 'Interstellar', rating: 8.6, match: 'Match', gradient: gradientAt(1) },
-    { title: 'Inception', rating: 8.8, match: 'Match', gradient: gradientAt(2) },
-    { title: 'The Prestige', rating: 8.5, match: '91% Match', gradient: gradientAt(3) },
-    { title: 'Arrival', rating: 8.0, match: 'Match', gradient: gradientAt(4) },
+    // { title: 'Dune: Part Two', rating: 8.5, match: 'Match', gradient: gradientAt(0) },
+    // { title: 'Interstellar', rating: 8.6, match: 'Match', gradient: gradientAt(1) },
+    // { title: 'Inception', rating: 8.8, match: 'Match', gradient: gradientAt(2) },
+    // { title: 'The Prestige', rating: 8.5, match: '91% Match', gradient: gradientAt(3) },
+    // { title: 'Arrival', rating: 8.0, match: 'Match', gradient: gradientAt(4) },
   ];
 
   nolanPicks: Movie[] = [
@@ -51,5 +68,23 @@ export class DashboardComponent {
 
   askAi(): void {
     alert('Ask AI Anything');
+  }
+  getPopularRecommendations(): void {
+    console.log('getPopularRecommendations called');
+    this.recommendationsService.getPopularRecommendations().subscribe({
+          next: (response) => {
+            this.topPicks = response?.data || [];
+            console.log('Popular Recommendations:', this.topPicks);
+          },
+          error: (error) => {
+            console.error('Login failed', error);
+          },
+          complete() {
+            console.log('api completed');
+          },
+    })
+  }
+  logout():void{
+    this.tokenService.logout();
   }
 }

@@ -7,14 +7,9 @@
     <div class="tagline">Where AI understands your taste.</div>
 
     <nav class="nav">
-      <a href="#" class="active"><span class="ic">
+      <a class="active" (click)="gotoDshboard()"><span class="ic">
         <img src="images/home-1.svg" alt="Dashboard Icon" class="icon">
       </span>Dashboard</a>
-      <!-- <a href="#"><span class="ic">🤖</span>AI Chat</a>
-      <a href="#"><span class="ic">🧭</span>Discover</a>
-      <a href="#"><span class="ic">🔖</span>Watchlist</a>
-      <a href="#"><span class="ic">📊</span>Analytics</a>
-      <a href="#"><span class="ic">⚙️</span>Settings</a> -->
     </nav>
 
     <div class="taste-card">
@@ -39,10 +34,18 @@
           />
         </div>
       <div class="icon-btn">🔔<span class="dot"></span></div>
-      <div class="user-chip">
-        <div class="avatar">{{ userName.charAt(0) }}</div>
-        {{ userName }}
+      <div class="user-chip" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <div class="avatar" >
+          <!-- {{ userName.charAt(0) }} -->
+          B</div>
+       
       </div>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logout()">
+        <span>Logout</span>
+      </button>
+    </mat-menu>
     </div>
 
     <section class="hero">
@@ -56,8 +59,8 @@
     </section>
 
     <div class="section-head">
-      <h3>✨ Top picks for you</h3>
-      <span class="view-all">View all</span>
+      <h3>✨ Popular movies for you</h3>
+      <!-- <span class="view-all">View all</span> -->
     </div>
     <div class="movie-row">
       <div class="movie-card" *ngFor="let m of topPicks">
@@ -70,7 +73,7 @@
 
     <div class="section-head">
       <h3>🎬 Because you like Christopher Nolan</h3>
-      <span class="view-all">View all</span>
+      <!-- <span class="view-all">View all</span> -->
     </div>
     <div class="movie-row">
       <div class="movie-card" *ngFor="let m of nolanPicks">

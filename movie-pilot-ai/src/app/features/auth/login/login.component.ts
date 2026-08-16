@@ -22,6 +22,7 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService
+
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -45,12 +46,14 @@ export class LoginComponent {
 
     this.authService.login(this.loginForm.value).subscribe({
       next: (response) => {
-        console.log('Login submitted', response);
-        this.router.navigate(['/dashboard']);
+           this.router.navigate(['/dashboard']);
       },
       error: (error) => {
         console.error('Login failed', error);
-      }
+      },
+      complete() {
+         console.log('api completed');
+      },
     });
   }
 
