@@ -39,5 +39,18 @@ dist/
 # Log files
 *.log
 
+# ==============================
+# ML / Data Science
+# ==============================
+
+# ML datasets
+ml/datasets/
+
+# Generated / trained ML model artifacts
+ml/model_artifacts/
+
+# Jupyter Notebook temporary files
+**/.ipynb_checkpoints/
+
 # Local dependency snapshots are allowed to be committed if intentionally generated
 # requirements.txt is intentionally tracked by project codebase
