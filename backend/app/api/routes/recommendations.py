@@ -49,6 +49,24 @@ def recommendation_health():
         )
     }
 
+@router.get("/recommendations/search")
+def search_movies(
+    query: str = Query(..., min_length=1),
+    limit: int = Query(10, ge=1, le=50) 
+):
+    return recommendation_service.search_movies(
+        query=query,
+        limit=limit
+    )
+@router.get("/recommendations/by-genre")
+def get_movies_by_genre(
+    genre: str = Query(..., min_length=1),
+    limit: int = Query(10, ge=1, le=50)
+):
+    return recommendation_service.get_movies_by_genre(
+        genre=genre,
+        limit=limit
+    )
 
 @router.get(
     "/recommendations/{user_id}",
@@ -94,7 +112,7 @@ def get_similar_movies(
     recommendations = (
         recommendation_service
         .get_similar_movies(
-            movie_id=movie_id,
+            movie_id=movie_id,  
             n=limit
         )
     )

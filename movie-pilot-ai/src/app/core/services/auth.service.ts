@@ -26,7 +26,8 @@ export class AuthService {
   login(payload: LoginRequest): Observable<any> {
     return this.apiService.post<any>('/auth/login', payload).pipe(
       map((response) => {
-        const token = response?.token ?? response?.accessToken ?? response?.data?.token;
+        console.log('Login response:', response);
+        const token = response?.access_token ?? null;
         if (token) {
           this.tokenService.setToken(token);
         }

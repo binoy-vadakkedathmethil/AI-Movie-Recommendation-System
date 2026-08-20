@@ -26,13 +26,112 @@
 
   <main class="main">
     <div class="topbar">
-     <div class="movie-search">
-          <span class="search-icon">🔍</span>
-          <input
-            type="text"
-            placeholder="Search movies, genres, actors, or ask AI..."
-          />
+<div class="movie-search">
+
+  <span class="search-icon">🔍</span>
+
+  <input
+    matInput
+    type="text"
+    placeholder="Search movies, genres"
+    [formControl]="searchControl"
+    [matAutocomplete]="movieAuto"
+  />
+
+  <button
+    *ngIf="searchControl.value"
+    type="button"
+    class="clear-search"
+    (click)="clearSearch()"
+  >
+    ×
+  </button>
+
+ <mat-autocomplete
+  #movieAuto="matAutocomplete"
+  class="movie-autocomplete"
+  panelWidth="520px"
+  (optionSelected)="selectMovie($event.option.value)"
+>
+
+  @if (isSearching()) {
+
+    <mat-option disabled class="search-loading">
+      <div class="loading-content">
+        <mat-spinner
+          diameter="20"
+          strokeWidth="3"
+        ></mat-spinner>
+
+        <span>Searching movies...</span>
+      </div>
+    </mat-option>
+
+  } @else {
+
+    @for (
+      movie of searchResults();
+      track movie.movieId
+    ) {
+
+      <mat-option
+        [value]="movie"
+        class="movie-option"
+      >
+
+        <div class="movie-result">
+
+          <!-- Movie icon -->
+          <div class="movie-poster">
+            <span>🎬</span>
+          </div>
+
+          <!-- Movie information -->
+          <div class="movie-info">
+
+            <div class="movie-title">
+              {{ movie.title }}
+            </div>
+
+            <div class="movie-genres">
+              @for (
+                genre of movie.genres.split('|').slice(0, 3);
+                track genre
+              ) {
+                <span class="genre">
+                  {{ genre }}
+                </span>
+              }
+            </div>
+
+           
+
+          </div>
+
         </div>
+
+      </mat-option>
+
+    }
+
+    @if (
+      searchControl.value.trim() &&
+      searchResults().length === 0
+    ) {
+
+      <mat-option disabled>
+        <div class="no-results">
+          No movies found
+        </div>
+      </mat-option>
+
+    }
+
+  }
+
+</mat-autocomplete>
+
+</div>
       <div class="icon-btn">🔔<span class="dot"></span></div>
       <div class="user-chip" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
         <div class="avatar" >
@@ -57,66 +156,47 @@
         <div class="btn-ghost"><span class="play-dot">▶</span>Watch demo</div>
       </div> -->
     </section>
+    
 
     <div class="section-head">
       <h3>✨ Popular movies for you</h3>
       <!-- <span class="view-all">View all</span> -->
     </div>
     <div class="movie-row">
-      <div class="movie-card" *ngFor="let m of topPicks">
-        <div class="poster" [style.background]="m.gradient">
-          <span class="badge">🎯 {{ m.match }}</span>{{ m.title }}
-        </div>
-        <div class="card-foot">★ {{ m.rating }}</div>
-      </div>
+       @for (movie of moviesWithGradient(); track movie.movie_id) {
+          <div class="movie-card" >
+            <div class="poster" [style.background]="movie.gradient">
+              <span class="badge">🎯 {{ movie.genres }}</span>{{ movie.title }}
+            </div>
+            <div class="card-foot">★ {{ movie.average_rating  | ratingRound }}</div>
+          </div>
+        }@empty {
+          <p>No movies found.</p>
+        }
     </div>
 
     <div class="section-head">
-      <h3>🎬 Because you like Christopher Nolan</h3>
+      <h3>🎬 Because you like Action</h3>
       <!-- <span class="view-all">View all</span> -->
     </div>
     <div class="movie-row">
-      <div class="movie-card" *ngFor="let m of nolanPicks">
-        <div class="poster" [style.background]="m.gradient">
-          <span class="badge">🎯 {{ m.match }}</span>{{ m.title }}
-        </div>
-        <div class="card-foot">★ {{ m.rating }}</div>
-      </div>
+       @for (movie of genresWithGradient(); track movie.movie_id) {
+          <div class="movie-card" >
+            <div class="poster" [style.background]="movie.gradient">
+              <span class="badge">🎯 {{ movie.genres }}</span>{{ movie.title }}
+            </div>
+            <div class="card-foot">★ {{ movie.average_rating  | ratingRound }}</div>
+          </div>
+        }@empty {
+          <p>No movies found.</p>
+        }
     </div>
   </main>
 
-  <aside class="right-col">
-    <div class="panel">
-      <div class="panel-head">🤖 AI movie assistant</div>
-      <div class="chat-bubble-user">Recommend sci-fi movies like Interstellar but shorter.</div>
-      <div class="chat-bubble-bot">
-        <div class="bot-ic">🤖</div>
-        <p>Here are some sci-fi movies you might love!</p>
-      </div>
-      <div class="mini-grid">
-        <div class="mini-card" *ngFor="let m of assistantPicks">
-          <div class="mini-poster" [style.background]="m.gradient">{{ m.title }}</div>
-          <div class="mini-rate">★ {{ m.rating }}</div>
-        </div>
-      </div>
-      <button class="btn-block" type="button">View all recommendations</button>
-    </div>
-
-    <div class="panel">
-      <div class="panel-head">🧠 AI insights</div>
-      <div class="stat-grid">
-        <div class="stat-box"><div class="l">Accuracy</div><div class="n n-green">96%</div></div>
-        <div class="stat-box"><div class="l">Top genre</div><div class="n n-purple">Sci-Fi</div></div>
-        <div class="stat-box"><div class="l">Exploration</div><div class="n n-blue">High</div></div>
-      </div>
-    </div>
-
-    <div class="panel mood-panel">
-      <div class="panel-head">😊 Mood-based picks <span class="view-all">View all</span></div>
-      <div class="mood-line">You seem <b>curious</b> today — movies that match your mood.</div>
-      <div class="mood-grid">
-        <div class="mood-mini" *ngFor="let m of moodPicks" [style.background]="m.gradient">{{ m.title }}</div>
-      </div>
-    </div>
-  </aside>
+ 
 </div>
+
+
+@if (isLoading()) {
+  <app-common-loader />
+}

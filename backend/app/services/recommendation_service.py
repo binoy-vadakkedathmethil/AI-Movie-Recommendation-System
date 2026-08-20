@@ -461,11 +461,7 @@ class RecommendationService:
     # ---------------------------------------------------------
     # Popular / cold-start recommendations
     # ---------------------------------------------------------
-
-    def get_popular_movies(
-        self,
-        n: int = 10
-    ):
+    def get_popular_movies(self, n: int = 10):
 
         popularity = (
             self.ratings
@@ -477,7 +473,7 @@ class RecommendationService:
             .reset_index()
         )
 
-        # Phase 6 cold-start rule.
+        # Phase 6 cold-start rule
         popularity = popularity[
             popularity["rating_count"] >= 20
         ]
@@ -493,25 +489,78 @@ class RecommendationService:
             ]
         )
 
+        movie_data = self.model.movies[
+            [
+                "movieId",
+                "title",
+                "year",
+                "genres"
+            ]
+        ]
+
         result = popularity.merge(
-            self.model.movies,
+            movie_data,
             on="movieId",
-            how="inner",
-            suffixes=(
-                "_train",
-                "_movie"
-            )
+            how="inner"
         ).head(n)
 
-        recommendations = []
+        # Convert DataFrame → list of dictionaries
+        return result.to_dict(orient="records")
+    
+    def search_movies(self, query: str, limit: int = 10):
 
-        for _, row in result.iterrows():
+        query = query.strip().lower()
 
-            recommendations.append(
-                self._movie_response(
-                    row,
-                    row["average_rating_train"]
-                )
-            )
+        if not query:
+            return []
 
-        return recommendations
+        title_match = (
+            self.model.movies["title"]
+            .fillna("")
+            .astype(str)
+            .str.lower()
+            .str.contains(query, regex=False)
+        )
+
+        genre_match = (
+            self.model.movies["genres"]
+            .fillna("")
+            .astype(str)
+            .str.lower()
+            .str.contains(query, regex=False)
+        )
+
+        results = self.model.movies[
+            title_match | genre_match
+        ].head(limit)
+
+        return results[
+            [
+                "movieId",
+                "title",
+                "genres",
+                "year",
+                "average_rating",
+                "rating_count"
+            ]
+        ].to_dict(orient="records")
+    
+    def get_movies_by_genre(self, genre: str, limit: int = 10):
+        genre = genre.strip().lower()
+
+        if not genre:
+            return []
+
+        genre_match = (
+            self.model.movies["genres"]
+            .fillna("")
+            .astype(str)
+            .str.lower()
+            .str.contains(genre, regex=False)
+        )
+
+        results = self.model.movies[genre_match].head(limit)
+
+        return results[
+            ["movieId", "title", "genres", "year", "average_rating", "rating_count"]
+        ].to_dict(orient="records")

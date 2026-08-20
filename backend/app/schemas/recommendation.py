@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 
 
 class MovieRecommendation(BaseModel):
-    movie_id: int
+    movieId: int
     title: str
     year: int | None = None
     genres: str | None = None
@@ -25,5 +25,4 @@ class SimilarMoviesResponse(BaseModel):
 
 
 class PopularMoviesResponse(BaseModel):
-    count: int
-    recommendations: list[MovieRecommendation]
+   recommendations: list[MovieRecommendation]
