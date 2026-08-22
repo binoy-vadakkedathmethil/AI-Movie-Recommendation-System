@@ -1,0 +1,7 @@
+{
+  "positive_rating_threshold": 4.0,
+  "content_weight": 0.5,
+  "collaborative_weight": 0.5,
+  "default_recommendation_count": 10,
+  "model_version": "phase8-v1"
+}

@@ -1,0 +1,16 @@
+{
+  "movie_count": 62423,
+  "content_feature_count": 20185,
+  "content_matrix_rows": 62423,
+  "collaborative_user_count": 162541,
+  "collaborative_movie_count": 56559,
+  "user_factor_dimensions": [
+    162541,
+    50
+  ],
+  "movie_factor_dimensions": [
+    56559,
+    50
+  ],
+  "model_version": "phase8-v1"
+}

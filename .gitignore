@@ -47,7 +47,7 @@ dist/
 ml/datasets/
 
 # Generated / trained ML model artifacts
-ml/model_artifacts/
+# ml/model_artifacts/
 
 # Jupyter Notebook temporary files
 **/.ipynb_checkpoints/
