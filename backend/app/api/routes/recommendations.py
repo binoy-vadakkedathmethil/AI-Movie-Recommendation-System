@@ -124,7 +124,7 @@ def get_similar_movies(
         )
 
     return {
-        "movie_id": movie_id,
+        "movieId": movie_id,
         "count": len(
             recommendations
         ),
@@ -157,3 +157,18 @@ def get_popular_movies(
         ),
         "recommendations": recommendations
     }
+
+@router.get("/movies/{movie_id}")
+def get_movie_by_id(movie_id: int):
+
+    movie = recommendation_service.get_movie_by_id(
+        movie_id
+    )
+
+    if movie is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Movie not found"
+        )
+
+    return movie

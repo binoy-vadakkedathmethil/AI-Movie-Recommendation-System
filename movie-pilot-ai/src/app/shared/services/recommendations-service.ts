@@ -32,5 +32,11 @@ export class RecommendationsService {
       `/recommendations/by-genre?genre=${encodeURIComponent(query)}&limit=${limit}`
     );
   }
+  getMoviesById(id:string|number) : Observable<any> {
+    return this.apiService.get(`/movies/${id}`)
+  }
+  getSimilarMoviesById(id:string|number, limit: number = 5) : Observable<any> {
+    return this.apiService.get(`/movies/${id}/similar?limit=${limit}`)
+  }
 
 }

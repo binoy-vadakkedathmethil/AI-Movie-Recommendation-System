@@ -49,12 +49,7 @@ export class DashboardComponent {
         gradient: gradientAt(index)
       }))
     );
-  private destroyRef = inject(DestroyRef);
- searchControl = new FormControl('', {
-    nonNullable: true
-  });
-    searchResults = signal<any[]>([]);
-  isSearching = signal(false);
+
 
 constructor(
     private readonly tokenService: TokenService,
@@ -64,87 +59,9 @@ constructor(
   ngOnInit(): void {
     this.getPopularRecommendations();
     this.getMoviesByGenre();
-   this.searchControl.valueChanges.pipe(
-  debounceTime(300),
-  distinctUntilChanged(),
 
-  switchMap(query => {
-    const search = query.trim();
-
-    if (!search) {
-      this.isSearching.set(false);
-      this.searchResults.set([]);
-
-      return of({
-        query: '',
-        count: 0,
-        movies: []
-      });
-    }
-
-    this.isSearching.set(true);
-
-    return this.recommendationsService
-      .searchMovies(search, 10)
-      .pipe(
-        catchError(error => {
-          console.error('Search error:', error);
-
-          this.searchResults.set([]);
-          this.isSearching.set(false);
-
-          return of({
-            query: search,
-            count: 0,
-            movies: []
-          });
-        })
-      );
-  }),
-
-  takeUntilDestroyed(this.destroyRef)
-).subscribe(response => {
-  this.searchResults.set(response ?? []);
-  this.isSearching.set(false);
-});
   }
-  gotoDshboard(): void {
-     this.router.navigate(['/dashboard']);
-  }
-  
 
-  nolanPicks: Movie[] = [
-    { title: 'The Dark Knight', rating: 9.0, match: '93% Match', gradient: gradientAt(2) },
-    { title: 'Memento', rating: 8.4, match: '90% Match', gradient: gradientAt(3) },
-    { title: 'Tenet', rating: 7.3, match: '90% Match', gradient: gradientAt(4) },
-    { title: 'Dunkirk', rating: 7.8, match: '88% Match', gradient: gradientAt(5) },
-    { title: 'Inception', rating: 8.8, match: '93% Match', gradient: gradientAt(0) },
-  ];
-
-  assistantPicks: Movie[] = [
-    { title: 'Arrival', rating: 8.0, match: '', gradient: gradientAt(0) },
-    { title: 'Gravity', rating: 7.7, match: '', gradient: gradientAt(1) },
-    { title: 'The Martian', rating: 8.0, match: '', gradient: gradientAt(2) },
-  ];
-
-  moodPicks: Movie[] = [
-    { title: 'The Martian', rating: 0, match: '', gradient: gradientAt(1) },
-    { title: 'Ex Machina', rating: 0, match: '', gradient: gradientAt(2) },
-    { title: 'Source Code', rating: 0, match: '', gradient: gradientAt(3) },
-    { title: 'Looper', rating: 0, match: '', gradient: gradientAt(4) },
-  ];
-
-  genres = [
-    { label: 'Sci-Fi', cls: 'p-purple' },
-    { label: 'Thriller', cls: 'p-blue' },
-    { label: 'Mystery', cls: 'p-pink' },
-    { label: 'Drama', cls: 'p-amber' },
-    { label: 'Adventure', cls: 'p-teal' },
-  ];
-
-  askAi(): void {
-    alert('Ask AI Anything');
-  }
   getPopularRecommendations(): void {
     this.isLoading.set(true);
     console.log('getPopularRecommendations called');
@@ -179,22 +96,12 @@ constructor(
     })
     
   }
-  logout():void{
-    this.tokenService.logout();
-  }
-  clearSearch(): void {
-  this.searchControl.setValue('', {
-    emitEvent: false
-  });
 
-  this.searchResults.set([]);
-}
-selectMovie(movie: any): void {
-  this.searchControl.setValue(movie.title, {
-    emitEvent: false
-  });
+ 
 
-  this.searchResults.set([]);
+selectedMovie(movie: any): void {
+  this.router.navigate(['/app/movie', movie.movieId]);
+  console.log('Selected movie:', movie);
 }
   
 }

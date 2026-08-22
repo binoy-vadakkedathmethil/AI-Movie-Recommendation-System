@@ -19,7 +19,7 @@ class RecommendationResponse(BaseModel):
 
 
 class SimilarMoviesResponse(BaseModel):
-    movie_id: int
+    movieId: int
     count: int
     recommendations: list[MovieRecommendation]
 

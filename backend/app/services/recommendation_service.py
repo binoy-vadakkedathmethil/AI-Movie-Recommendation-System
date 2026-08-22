@@ -125,7 +125,7 @@ class RecommendationService:
             )
 
         return {
-            "movie_id": int(
+            "movieId": int(
                 row["movieId"]
             ),
             "title": str(
@@ -564,3 +564,23 @@ class RecommendationService:
         return results[
             ["movieId", "title", "genres", "year", "average_rating", "rating_count"]
         ].to_dict(orient="records")
+    
+    def get_movie_by_id(self, movie_id: int):
+
+        movie = self.model.movies[
+            self.model.movies["movieId"] == movie_id
+        ]
+
+        if movie.empty:
+            return None
+
+        return movie.iloc[0][
+            [
+                "movieId",
+                "title",
+                "genres",
+                "year",
+                "average_rating",
+                "rating_count"
+            ]
+        ].to_dict()

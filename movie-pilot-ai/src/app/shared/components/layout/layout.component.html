@@ -1,0 +1,140 @@
+<div class="dash-view">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand-row">
+      <div class="logo-icon">🎬</div>
+      <div class="brand-text">Movie<b>Pilot AI</b></div>
+    </div>
+    <div class="tagline">Where AI understands your taste.</div>
+
+    <nav class="nav">
+      <a class="active" (click)="gotoDshboard()"><span class="ic">
+          <img src="images/home-1.svg" alt="Dashboard Icon" class="icon">
+        </span>Dashboard</a>
+    </nav>
+
+    <!-- <div class="taste-card">
+      <h4>Your AI taste profile</h4>
+      <div class="ring-wrap">
+        <div class="ring"><span>85%</span></div>
+        <div class="lbl">Profile strength<b>Strong match</b></div>
+      </div>
+      <div class="genre-pills">
+        <span class="pill" *ngFor="let g of genres" [ngClass]="g.cls">{{ g.label }}</span>
+      </div>
+    </div> -->
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-col">
+  
+  <div class="topbar">
+      <div class="movie-search">
+
+        <span class="search-icon">🔍</span>
+
+        <input matInput type="text" placeholder="Search movies, genres" [formControl]="searchControl"
+          [matAutocomplete]="movieAuto" />
+
+        <button *ngIf="searchControl.value" type="button" class="clear-search" (click)="clearSearch()">
+          ×
+        </button>
+
+        <mat-autocomplete #movieAuto="matAutocomplete" class="movie-autocomplete" panelWidth="520px"
+          (optionSelected)="selectMovie($event.option.value)">
+
+          @if (isSearching()) {
+
+          <mat-option disabled class="search-loading">
+            <div class="loading-content">
+              <mat-spinner diameter="20" strokeWidth="3"></mat-spinner>
+
+              <span>Searching movies...</span>
+            </div>
+          </mat-option>
+
+          } @else {
+
+          @for (
+          movie of searchResults();
+          track movie.movieId
+          ) {
+
+          <mat-option [value]="movie" class="movie-option">
+
+            <div class="movie-result">
+
+              <!-- Movie icon -->
+              <div class="movie-poster">
+                <span>🎬</span>
+              </div>
+
+              <!-- Movie information -->
+              <div class="movie-info">
+
+                <div class="movie-title">
+                  {{ movie.title }}
+                </div>
+
+                <div class="movie-genres">
+                  @for (
+                  genre of movie.genres.split('|').slice(0, 3);
+                  track genre
+                  ) {
+                  <span class="genre">
+                    {{ genre }}
+                  </span>
+                  }
+                </div>
+
+
+
+              </div>
+
+            </div>
+
+          </mat-option>
+
+          }
+
+          @if (
+          searchControl.value.trim() &&
+          searchResults().length === 0
+          ) {
+
+          <mat-option disabled>
+            <div class="no-results">
+              No movies found
+            </div>
+          </mat-option>
+
+          }
+
+          }
+
+        </mat-autocomplete>
+
+      </div>
+      <div class="icon-btn">🔔<span class="dot"></span></div>
+      <div class="user-chip" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <div class="avatar">
+          <!-- {{ userName.charAt(0) }} -->
+          B
+        </div>
+
+      </div>
+
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="logout()">
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </div>
+    <!-- Routed page (dashboard, movie details, ...) renders here -->
+    <main class="page">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+
+</div>

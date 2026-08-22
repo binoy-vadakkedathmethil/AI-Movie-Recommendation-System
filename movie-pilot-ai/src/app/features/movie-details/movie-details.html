@@ -1,0 +1,54 @@
+<div class="app">
+    <!-- MAIN -->
+    <main class="main">
+        <!-- HERO -->
+        <section class="hero">
+            <div class="poster">
+                <div class="bars"></div>
+                
+                
+            </div>
+
+            <div class="hero-info">
+                <div class="chips">
+                    @for (genre of genres; track $index) {
+                        <span class="chip crime" >{{ genre }}</span>
+                    }
+                </div>
+                <h1 class="title">{{ movie.title }} </h1>
+
+                <div class="meta-row">
+                    <span class="stars">★ {{ movie?.average_rating | ratingRound}}<span>/5 </span></span>
+                </div>
+
+                
+
+               
+            </div>
+        </section>
+
+       
+
+        <!-- SIMILAR RAIL -->
+        <div class="section-head">
+            <h2>🎞️ Because you liked this</h2>
+        </div>
+        <div class="rail">
+             @for (similar of similarMovies; track similar.movie_id) {
+                 <div class="card" >
+                    <div class="card-art"><span class="genre-tag">{{ similar?.genres }}</span></div>
+                    <div class="card-body">
+                    <div class="card-title">{{ similar.title }}</div>
+                    <div class="card-rating">
+                        ★ {{ movie?.average_rating | ratingRound}}<span>/5 </span>
+                    </div>
+                </div>
+            </div>
+            }
+           
+        </div>
+    </main>
+</div>
+@if (isLoading() || isLoadingSimilar()) {
+<app-common-loader />
+}

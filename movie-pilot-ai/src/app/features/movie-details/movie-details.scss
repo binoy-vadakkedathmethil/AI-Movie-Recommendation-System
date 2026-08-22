@@ -1,0 +1,577 @@
+// ---------------------------------
+// Tokens
+// ---------------------------------
+$bg:      #0a0a13;
+$panel:   #12111e;
+$panel-2: #171625;
+$line:    #242238;
+$text:    #f2f1f8;
+$muted:   #9793ac;
+$muted-2: #6a6784;
+$violet:  #7c5cff;
+$violet-2:#5b8cff;
+$gold:    #f5b942;
+$grad: linear-gradient(135deg, #{$violet} 0%, #{$violet-2} 100%);
+
+$font-display: 'Space Grotesk', sans-serif;
+$font-body: 'Inter', sans-serif;
+$font-mono: 'IBM Plex Mono', monospace;
+
+@mixin card($radius: 14px) {
+  background: $panel;
+  border: 1px solid $line;
+  border-radius: $radius;
+}
+
+
+
+
+
+
+
+
+.crumb {
+  font-size: 12.5px;
+  color: $muted-2;
+  margin-bottom: 18px;
+
+  a {
+    color: $muted;
+  }
+
+  .cur {
+    color: $text;
+  }
+}
+
+// ---------------------------------
+// Hero
+// ---------------------------------
+.hero {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid $line;
+  background:
+    radial-gradient(1100px 420px at 78% -10%, #2c2160 0%, transparent 60%),
+    linear-gradient(180deg, #171326 0%, #0e0d18 100%);
+  padding: 38px 38px 34px;
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 32px;
+
+  .poster {
+    width: 180px;
+    height: 262px;
+    border-radius: 14px;
+    flex: none;
+    background: linear-gradient(160deg, #3a2d63, #161225 70%);
+    border: 1px solid #2c2748;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+
+    .bars {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        115deg,
+        rgba(255, 255, 255, 0.035) 0 2px,
+        transparent 2px 26px
+      );
+    }
+
+    .glyph {
+      font-size: 44px;
+      opacity: 0.85;
+    }
+
+    .pyear {
+      position: absolute;
+      bottom: 10px;
+      left: 12px;
+      font-family: $font-mono;
+      font-size: 11px;
+      color: #c9c2ff;
+    }
+  }
+
+  .hero-info {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+  }
+
+  .chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .chip {
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 5px 11px;
+    border-radius: 100px;
+    background: #1c1a30;
+    border: 1px solid $line;
+    color: #c7c2e6;
+
+    &.crime {
+      color: #ff9d8a;
+      background: #2c1720;
+      border-color: #3d2028;
+    }
+  }
+
+  .title {
+    font-family: $font-display;
+    font-weight: 700;
+    font-size: 33px;
+    line-height: 1.1;
+    letter-spacing: -0.3px;
+
+    small {
+      color: $muted-2;
+      font-weight: 500;
+      font-size: 20px;
+    }
+  }
+
+  .meta-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: $muted;
+
+    .stars {
+      color: $gold;
+      font-weight: 700;
+
+      span {
+        color: $text;
+        margin-left: 3px;
+      }
+    }
+
+    .dot-sep {
+      color: #3a3752;
+    }
+  }
+
+  .logline {
+    color: $muted;
+    font-size: 14.5px;
+    line-height: 1.65;
+    max-width: 640px;
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+  }
+}
+
+.btn {
+  padding: 11px 20px;
+  border-radius: 11px;
+  font-weight: 600;
+  font-size: 13.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid $line;
+  cursor: pointer;
+
+  &.primary {
+    background: $grad;
+    border: none;
+    color: #fff;
+    box-shadow: 0 10px 26px -10px rgba($violet-2, 0.47);
+  }
+
+  &.ghost {
+    background: #171526;
+    color: $text;
+    margin-bottom:10px;
+  }
+
+  &.icon-only {
+    padding: 11px 13px;
+  }
+}
+
+// ---------------------------------
+// Content grid
+// ---------------------------------
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 26px;
+  margin-top: 26px;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  min-width: 0;
+}
+
+.panel {
+  @include card(18px);
+  padding: 24px;
+
+  h3 {
+    font-family: $font-display;
+    font-size: 15.5px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+
+    .tag {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #a98bff;
+      background: #221d3d;
+      padding: 3px 8px;
+      border-radius: 100px;
+      letter-spacing: 0.4px;
+    }
+  }
+
+  .syn {
+    font-size: 14px;
+    line-height: 1.75;
+    color: #c9c6de;
+  }
+
+  .fact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 6px;
+  }
+
+  .fact {
+    b {
+      display: block;
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: $muted-2;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    span {
+      font-size: 14px;
+      font-weight: 500;
+      color: $text;
+    }
+  }
+
+  .cast-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .cast-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .cast-av {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      flex: none;
+      background: linear-gradient(150deg, #31284f, #1a1729);
+      border: 1px solid $line;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: #c9c2ff;
+    }
+
+    .cast-name {
+      font-size: 13.5px;
+      font-weight: 600;
+    }
+
+    .cast-role {
+      font-size: 12px;
+      color: $muted-2;
+    }
+  }
+}
+
+// ---------------------------------
+// AI match card (signature element)
+// ---------------------------------
+.match-card {
+  background: linear-gradient(180deg, #191531, #100e1c);
+  border: 1px solid #2b2650;
+
+  .match-score {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 6px;
+
+    .ring-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ring {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      flex: none;
+
+      &::before {
+        content: "";
+        display: block;
+        width: 60px;
+        height: 60px;
+        margin: 9px;
+        border-radius: 50%;
+        background: #151228;
+      }
+    }
+
+    .ring-num {
+      position: absolute;
+      font-family: $font-display;
+      font-weight: 700;
+      font-size: 17px;
+    }
+
+    .lbl {
+      b {
+        display: block;
+        font-family: $font-display;
+        font-size: 19px;
+      }
+
+      span {
+        font-size: 12px;
+        color: $muted-2;
+      }
+    }
+  }
+
+  .why-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .why-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 12.8px;
+    line-height: 1.55;
+    color: #c1bcda;
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: $violet;
+      margin-top: 6px;
+      flex: none;
+      box-shadow: 0 0 0 3px rgba($violet, 0.13);
+    }
+  }
+
+  .scores {
+    margin-top: 6px;
+  }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: $muted;
+    margin-top: 10px;
+
+    .bar-label {
+      width: 90px;
+    }
+
+    .bar-track {
+      flex: 1;
+      height: 6px;
+      border-radius: 6px;
+      background: #221e3a;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 6px;
+      background: $grad;
+    }
+  }
+
+  .quote-box {
+    margin-top: 18px;
+    padding: 14px;
+    border-radius: 12px;
+    background: #0d0c19;
+    border: 1px solid #221e3a;
+    font-size: 12.3px;
+    color: #a8a3c6;
+    line-height: 1.6;
+    font-style: italic;
+  }
+}
+
+// ---------------------------------
+// Similar movies rail
+// ---------------------------------
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 34px 0 16px;
+  gap: 8px;
+
+  h2 {
+    font-family: $font-display;
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+.rail {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #2a2840;
+    border-radius: 8px;
+  }
+}
+
+.card {
+  flex: none;
+  width: 220px;
+  border-radius: 16px;
+  overflow: hidden;
+  @include card(16px);
+  &:nth-child(3n + 1) {
+     .card-art {
+        background: linear-gradient(160deg, #4a3a12, #241d10);
+    }
+  }
+
+  &:nth-child(3n + 2) {
+     .card-art {
+       background: linear-gradient(160deg, #3a1030, #1c0e1f);
+    }
+  }
+
+  &:nth-child(3n + 3) {
+   .card-art {
+      background: linear-gradient(160deg, #0e3a2c, #0e1c18);
+    }
+  }
+
+  .card-art {
+    height: 130px;
+    position: relative;
+    padding: 10px;
+    display: flex;
+    align-items: flex-start;
+
+    .genre-tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 9px;
+      border-radius: 100px;
+      background: rgba(0, 0, 0, 0.33);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      color: #e8e5f7;
+    }
+
+
+  
+  }
+
+  .card-body {
+    padding: 12px 14px 16px;
+  }
+
+  .card-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+
+  .card-rating {
+    font-size: 12px;
+    color: $gold;
+    font-weight: 700;
+
+    span {
+      color: $muted-2;
+      font-weight: 500;
+    }
+  }
+}
+
+// ---------------------------------
+// Responsive
+// ---------------------------------
+@media (max-width: 980px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+
+    .poster {
+      display: none;
+    }
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
